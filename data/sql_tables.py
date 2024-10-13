@@ -1,8 +1,8 @@
 TABLE_COLUMNS = tables_columns = {
                     "customer": ["id", "country"],
                     "product": ["id", "description", "price"],
-                    "customerOrder": ["id", "invoice_nb", "customer_id"],
-                    "orderDetail": ["id", "quantity", "order_id", "product_id"]
+                    "customer_order": ["id", "invoice_nb", "customer_id"],
+                    "order_detail": ["id", "quantity", "order_id", "product_id"]
                 }
 
 CREATE_TABLES = {"customer": """CREATE TABLE customer (
@@ -11,7 +11,7 @@ CREATE_TABLES = {"customer": """CREATE TABLE customer (
 	                PRIMARY KEY (id)
                 );""",
 
-                "customerOrder": """CREATE TABLE customerOrder (
+                "customer_order": """CREATE TABLE customer_order (
                     id INTEGER NOT NULL, 
                     invoice_nb INTEGER, 
                     customer_id INTEGER, 
@@ -26,11 +26,14 @@ CREATE_TABLES = {"customer": """CREATE TABLE customer (
                     PRIMARY KEY (id)
                 );""",
 
-                "product": """CREATE TABLE product (
+                "order_detail": """CREATE TABLE order_detail (
                     id INTEGER NOT NULL, 
-                    description VARCHAR, 
-                    price FLOAT, 
-                    PRIMARY KEY (id)
+                    quantity INTEGER, 
+                    order_id INTEGER, 
+                    product_id INTEGER, 
+                    PRIMARY KEY (id), 
+                    FOREIGN KEY(order_id) REFERENCES "order" (id), 
+                    FOREIGN KEY(product_id) REFERENCES product (id)
                 );"""
 
                 }
