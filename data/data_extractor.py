@@ -1,4 +1,18 @@
 import csv
+import sqlite3
+
+from sql_tables import TABLE_COLUMNS, CREATE_TABLES
+
+
+def get_sqlite_engine():
+    connexion = sqlite3.connect("./database/data.db")
+    cursor = connexion.cursor()
+    return connexion, cursor
+
+def create_tables_with_sql(cursor):
+    print("Création des tables...")
+    for sql_command in CREATE_TABLES.values():
+        cursor.execute(sql_command)
 
 def extract(csv_path):
     tables_data = {
@@ -9,6 +23,7 @@ def extract(csv_path):
     }
 
     with open(csv_path, newline='') as f:
+        print(f"\nExtraction des données...")
         reader = csv.reader(f, delimiter=';')
         reader.__next__()
         for row in reader:
