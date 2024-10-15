@@ -1,9 +1,11 @@
 from sqlalchemy import (Column, Integer, 
                         Float, String, 
-                        ForeignKey)
+                        ForeignKey,
+                        Date)
 from sqlalchemy.orm import (DeclarativeBase, 
                             mapped_column, 
                             relationship)
+
 
 
 class Base(DeclarativeBase):
@@ -30,6 +32,7 @@ class CustomerOrder(Base):
 
     id = mapped_column(Integer, primary_key=True)
     invoice_nb = Column(Integer)
+    invoice_date = Column(String)
     
     customer_id = mapped_column(ForeignKey("customer.id"))
     customer = relationship("Customer")

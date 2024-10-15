@@ -1,7 +1,7 @@
 TABLE_COLUMNS = tables_columns = {
                     "customer": ["id", "country"],
                     "product": ["id", "description", "price"],
-                    "customer_order": ["id", "invoice_nb", "customer_id"],
+                    "customer_order": ["id", "invoice_nb", "invoice_date", "customer_id"],
                     "order_detail": ["id", "quantity", "order_id", "product_id"]
                 }
 
@@ -14,6 +14,7 @@ CREATE_TABLES = {"customer": """CREATE TABLE customer (
                 "customer_order": """CREATE TABLE customer_order (
                     id INTEGER NOT NULL, 
                     invoice_nb INTEGER, 
+                    invoice_date DATE,
                     customer_id INTEGER, 
                     PRIMARY KEY (id), 
                     FOREIGN KEY(customer_id) REFERENCES customer (id)
