@@ -26,6 +26,31 @@ def create_tables_with_orm(engine):
     Base.metadata.create_all(engine)
 
 def extract(csv_path):
+    """
+    Renvoie l'ensemble des données contenues dans un fichier CSV
+    Entrées
+        csv_path : chemin vers le fichier csv (type : str)
+    Retours
+        tables_data : données de l'ensemble des tables (type: dict)
+        structure :
+            {"customer": {customer_id: [customer_id, country],
+                            customer_id: [customer_id, country],
+                            customer_id: [customer_id, country],
+                            etc.},
+            "customer_order: {order_id: [order_id, invoice_nb, invoice_date, customer_id],
+                            order_id: [order_id, invoice_nb, invoice_date, customer_id],
+                            order_id: [order_id, invoice_nb, invoice_date, customer_id],
+                            etc.},
+            "order_detail": {order_detail_id: [order_detail_id, quantity, order_id, product_id],
+                            order_detail_id: [order_detail_id, quantity, order_id, product_id],
+                            order_detail_id: [order_detail_id, quantity, order_id, product_id],
+                            etc.},
+            "product": {product_id: [product_id, description, price],
+                            product_id: [product_id, description, price],
+                            product_id: [product_id, description, price],
+                            etc.}}
+
+    """
     tables_data = {
         "customer": {},
         "product": {},
@@ -38,6 +63,7 @@ def extract(csv_path):
         reader = csv.reader(f, delimiter=';')
         reader.__next__()
         for row in reader:
+            # A chaque itération, row contient les données d'une ligne du fichier CSV sous forme de liste
             if row[3] not in tables_data["customer"]:
                 tables_data["customer"][row[3]] = [row[3], row[4]]
             if row[7] not in tables_data["product"]:
