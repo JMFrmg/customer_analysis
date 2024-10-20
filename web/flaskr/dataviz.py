@@ -16,7 +16,7 @@ def home():
     db = get_db()
     rows = db.execute(
         f"""
-        SELECT *
+        SELECT country, invoice_nb, invoice_date, description, price, quantity 
         FROM customer ta
         JOIN customer_order tb1 ON ta.id = tb1.customer_id
         JOIN order_detail tb2 ON tb1.id = tb2.order_id
