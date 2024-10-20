@@ -70,7 +70,7 @@ def extract(csv_path):
                 description = row[8].replace("'", " ").replace('"', '')
                 tables_data["product"][row[7]] = [row[7], description, row[9]]
             if row[0] not in tables_data["customer_order"]:
-                tables_data["customer_order"][row[0]] = [row[0], row[1], row[2], row[2]]
+                tables_data["customer_order"][row[0]] = [row[0], row[1], row[2], row[3]]
             if row[5] not in tables_data["order_detail"]:
                 tables_data["order_detail"][row[5]] = [row[5], row[6], row[0], row[7]]
     
