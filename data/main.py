@@ -27,7 +27,7 @@ if __name__ == "__main__": # Sécurité
         for table_name, data in tables_data.items():
                 # table_name : nom de la table
                 # data : lignes de cette table
-                print(f"{table_name} : {len(data)} entrées.")
+                print(f"{table_name} : {len(data)} lignes.")
 
         print(f"\nPeuplement de la BDD...")
         start_time = time.time()  # Temps pour le calcul de la performance
