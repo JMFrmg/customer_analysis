@@ -11,13 +11,37 @@ from flaskr.db import get_db
 bp = Blueprint("dataviz", __name__, url_prefix="/dataviz")
 
 
-@bp.route("/customer", methods=["GET"])
-def customer():
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+@bp.route("/", methods=["GET"])
+def home():
     db = get_db()
-    customers = db.execute(
-        "SELECT * FROM customer LIMIT 10"
+    rows = db.execute(
+        f"""
+        SELECT *
+        FROM customer ta
+        JOIN customer_order tb1 ON ta.id = tb1.customer_id
+        JOIN order_detail tb2 ON tb1.id = tb2.order_id
+        JOIN product tb3 ON tb2.product_id = tb3.id
+        LIMIT 50
+        """
     ).fetchall()
-    print(customers)
+    print(rows)
+    columns = []
+    if rows:
+        columns = rows[-1].keys()
+        
+    return render_template("dataviz/table.html", columns=columns, rows=rows)
 
-    return render_template("dataviz/customer.html", customers=customers)
+@bp.route("/<table>", methods=["GET"])
+def customer(table):
+    db = get_db()
+    rows = db.execute(
+        f"SELECT * FROM {table} LIMIT 50"
+    ).fetchall()
+    print(rows)
+    columns = []
+    if rows:
+        columns = rows[-1].keys()
+    print(columns)
+        
+    return render_template("dataviz/table.html", columns=columns, rows=rows)
+
